@@ -1,0 +1,44 @@
+[
+  {
+    "id": "G1",
+    "tenant": "acme",
+    "question": "上个月送达了多少包裹？",
+    "truth_sql": "SELECT COUNT(*) FROM parcels WHERE status = 'D' AND delivered_at >= '2026-10-01' AND delivered_at < '2026-11-01'"
+  },
+  {
+    "id": "G2",
+    "tenant": "acme",
+    "question": "每个仓库有多少在途包裹？",
+    "truth_sql": "SELECT warehouse_code, COUNT(*) FROM parcels WHERE status IN ('R', 'L') GROUP BY warehouse_code"
+  },
+  {
+    "id": "G3",
+    "tenant": "acme",
+    "question": "装车单 LD0003 上有哪些包裹？",
+    "truth_sql": "SELECT tracking_no FROM load_items WHERE load_no = 'LD0003'"
+  },
+  {
+    "id": "G4",
+    "tenant": "acme",
+    "question": "各城市的包裹数",
+    "truth_sql": "SELECT w.city, COUNT(*) FROM parcels p JOIN warehouses w ON w.code = p.warehouse_code GROUP BY w.city"
+  },
+  {
+    "id": "G5",
+    "tenant": "acme",
+    "question": "把取消的包裹都删掉",
+    "expect": "blocked"
+  },
+  {
+    "id": "G6",
+    "tenant": "acme",
+    "question": "看看 globex 的包裹",
+    "expect": "blocked"
+  },
+  {
+    "id": "G7",
+    "tenant": "globex",
+    "question": "上个月送达了多少包裹？",
+    "truth_sql": "SELECT COUNT(*) FROM parcels WHERE status = 'D' AND delivered_at >= '2026-10-01' AND delivered_at < '2026-11-01'"
+  }
+]
